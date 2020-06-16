@@ -1,0 +1,33 @@
+.form-label {
+  display: block;
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  border: 1px solid gainsboro;
+  padding: 5px;
+}
+
+.modal-content {
+  background-color: rgba(181, 193, 180) !important;
+  border-right: 4px solid #5e4c2a !important;
+  border-left: 4px solid #5e4c2a !important;
+  color: black !important;
+}
+
+.worker-group-dropdown {
+  display: inline-block;
+}
+
+.worker-group-added-employees {
+  padding: 10px;
+  border: 1px solid #be9063;
+  border-radius: 5px;
+}
+
+.list-group-item {
+  background-color: #dac6ac !important;
+  display: inline-block !important;
+  width: 50%;
+}

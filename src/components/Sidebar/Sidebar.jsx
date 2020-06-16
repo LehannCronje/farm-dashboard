@@ -21,7 +21,7 @@ class Sidebar extends React.Component {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.sidebar.current, {
         suppressScrollX: true,
-        suppressScrollY: false
+        suppressScrollY: false,
       });
     }
   }
@@ -33,29 +33,27 @@ class Sidebar extends React.Component {
 
   render() {
     return (
-      <div
-        className="sidebar"
-        data-color={this.props.bgColor}
-        data-active-color={this.props.activeColor}
-      >
+      <div className="sidebar">
         <div className="sidebar-wrapper" ref={this.sidebar}>
           <div className="logo">
             <span className="simple-text text-center">Lehann template</span>
           </div>
           <Nav>
             {this.props.routes.map((prop, key) => {
-              return (
-                <li className={this.activeRoute(prop.path)} key={key}>
-                  <NavLink
-                    to={prop.layout + prop.path}
-                    className="nav-link"
-                    activeClassName="active"
-                  >
-                    <i className={prop.icon} />
-                    <p>{prop.name}</p>
-                  </NavLink>
-                </li>
-              );
+              if (prop.sidebar) {
+                return (
+                  <li className={this.activeRoute(prop.path)} key={key}>
+                    <NavLink
+                      to={prop.layout + prop.path}
+                      className="nav-link"
+                      activeClassName="active"
+                    >
+                      <i className={prop.icon} />
+                      <p>{prop.name}</p>
+                    </NavLink>
+                  </li>
+                );
+              }
             })}
           </Nav>
         </div>

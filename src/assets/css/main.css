@@ -16,6 +16,16 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
+@font-face {
+  font-family: "Roboto", sans-serif;
+  src: local("FireSans"), url("../fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+.body {
+  font-family: "Roboto", sans-serif !important;
+}
+
 .tim-row {
   margin-bottom: 20px;
 }
@@ -68,7 +78,7 @@
 }
 
 @media all and (min-width: 992px) {
-  .sidebar .nav>li.active-pro {
+  .sidebar .nav > li.active-pro {
     position: absolute;
     width: 100%;
     bottom: 10px;
@@ -94,7 +104,7 @@
 }
 
 .demo-icons a {
-  color: #608CEE;
+  color: #608cee;
   text-decoration: none;
 }
 
@@ -122,7 +132,7 @@
 
 .demo-icons section h2 {
   border-bottom: 1px solid #e2e2e2;
-  padding: 0 0 1em .2em;
+  padding: 0 0 1em 0.2em;
   margin-bottom: 1em;
 }
 
@@ -141,7 +151,7 @@
   float: left;
   padding: 16px 0;
   text-align: center;
-  border-radius: .25em;
+  border-radius: 0.25em;
   -webkit-transition: background 0.2s;
   -moz-transition: background 0.2s;
   transition: background 0.2s;
@@ -181,7 +191,7 @@
 
 .demo-icons ul p::selection,
 .demo-icons ul em::selection {
-  background: #608CEE;
+  background: #608cee;
   color: #efefef;
 }
 
@@ -190,11 +200,11 @@
 }
 
 .demo-icons ul em::before {
-  content: '[';
+  content: "[";
 }
 
 .demo-icons ul em::after {
-  content: ']';
+  content: "]";
 }
 
 .demo-icons ul input {
@@ -204,4 +214,134 @@
   box-shadow: none;
   outline: none;
   display: none;
+}
+
+/* Custom Style Lehann Cronje */
+
+.sidebar:after {
+  background: #b5c1b4;
+}
+
+.sidebar {
+  width: 200px;
+  border-right: 4px solid #5e4c2a;
+}
+
+.sidebar .sidebar-wrapper {
+  width: 200px;
+}
+
+.main-panel {
+  width: calc(100% - 200px);
+  min-height: 100vh;
+  background-image: url("/test1.jpg");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+}
+
+.box-component-wrapper {
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: 25px;
+  background-color: rgba(181, 193, 180, 0.9);
+  border-right: 4px solid #5e4c2a;
+  border-left: 4px solid #5e4c2a;
+  color: black;
+}
+
+.component-header {
+  margin: 0px;
+}
+
+.navbar-link {
+  padding: 5px 15px;
+  font-size: 18px;
+  border-right: 1px solid white;
+  color: white !important;
+}
+
+.login-wrapper {
+  height: 100vh;
+  background-image: url("/login-background.jpg");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+}
+
+.report-list {
+  margin: 20px;
+  padding: 25px;
+  border: 1px solid #be9063;
+  border-radius: 5px;
+}
+
+.button-action {
+  background-color: #606c7c;
+}
+
+.button-action:hover {
+  background-color: #606c7c !important;
+}
+
+.login-label {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.login-box-component-wrapper {
+  padding: 25px;
+}
+
+.navbar.navbar-transparent {
+  border-bottom: 1px solid #9a8a68;
+}
+
+.site-component {
+  margin-right: 5px;
+}
+
+.crop-component {
+  margin-left: 5px;
+}
+
+.table {
+  color: black;
+  background-color: #dac6ac;
+}
+
+.link {
+  color: #1e304f;
+}
+
+.link:hover {
+  color: #1e304f;
+  text-decoration: none;
+}
+
+.button-create {
+  background-color: #403d39 !important;
+}
+
+td {
+  font-size: 16px;
+}
+
+.sidebar .nav p {
+  color: black;
+}
+
+.logo .simple-text {
+  color: black !important;
+}
+
+@media screen and (max-width: 991px) {
+  .main-panel {
+    width: 100%;
+  }
+  html .nav-open .main-panel {
+    width: calc(100% - 200px);
+  }
 }
