@@ -18,7 +18,7 @@ class EmployeePopup extends React.Component {
       dropdownOpen: false,
       name: "",
       formData: this.props.data,
-      type: "",
+      type: "SELECT ROLE",
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -84,25 +84,7 @@ class EmployeePopup extends React.Component {
       } else {
         if (x === "dropdown") {
           form.push(
-            <Dropdown
-              key={x}
-              isOpen={this.state.dropdownOpen}
-              toggle={this.toggleDropdown}
-            >
-              <DropdownToggle caret>{this.state.dropDownValue}</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Choose Employee</DropdownItem>
-
-                {this.state.formData[x].map((employee, key) => (
-                  <DropdownItem
-                    key={key}
-                    onClick={() => this.handleDropdown(employee)}
-                  >
-                    {employee.type}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+            
           );
         } else {
           form.push(
@@ -131,14 +113,51 @@ class EmployeePopup extends React.Component {
 
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header closeButton>
-            <Modal.Title>Create Employee</Modal.Title>
+            
           </Modal.Header>
           <Modal.Body>
             <this.generateForm />
+            <p className=" m-0">Select Role</p>
+            <div className="col-12 worker-group-added-employees">
+              <div className="row d-flex justify-content-center">
+                <div className="col-6">
+
+                  <Dropdown
+                  className="d-inline-block w-100 h-100"
+                    key="empoyee-role"
+                    isOpen={this.state.dropdownOpen}
+                    toggle={this.toggleDropdown}
+                  >
+                    <DropdownToggle className="w-100 h-100 m-0 employee-dropdown-button" caret>Roles</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Select Employee Role</DropdownItem>
+
+                      {this.state.formData["dropdown"].map((employee, key) => (
+                        <DropdownItem
+                          key={key}
+                          onClick={() => this.handleDropdown(employee)}
+                        >
+                          {employee.type}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </Dropdown>
+
+                </div>
+                <div className="col-6 d-flex align-items-center">
+                <div className="selected-employee-role d-inline-block w-100">
+                    <li className="list-group-item w-100">
+                      {this.state.type}
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
           </Modal.Body>
           <Modal.Footer>
             <Button className="button-action" onClick={this.eventHandler}>
-              Save Changes
+              Create Employee
             </Button>
           </Modal.Footer>
         </Modal>

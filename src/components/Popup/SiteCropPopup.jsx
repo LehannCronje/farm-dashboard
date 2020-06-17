@@ -87,25 +87,7 @@ class SiteCropPopup extends React.Component {
       } else {
         if (x === "dropdown") {
           form.push(
-            <Dropdown
-              key={x}
-              isOpen={this.state.dropdownOpen}
-              toggle={this.toggleDropdown}
-            >
-              <DropdownToggle caret>{this.state.dropDownValue}</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Choose Crop</DropdownItem>
-
-                {this.state.formData[x].map((employee, key) => (
-                  <DropdownItem
-                    key={key}
-                    onClick={() => this.handleDropdown(employee)}
-                  >
-                    {employee.name}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+            
           );
         } else {
           form.push(
@@ -138,6 +120,44 @@ class SiteCropPopup extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <this.generateForm />
+            <p className=" m-0">Select Crop</p>
+            <div className="col-12 worker-group-added-employees">
+              <div className="row d-flex justify-content-center">
+                <div className="col-6">
+
+                  <Dropdown
+                  className="d-inline-block w-100 h-100"
+                    key="empoyee-role"
+                    isOpen={this.state.dropdownOpen}
+                    toggle={this.toggleDropdown}
+                  >
+                    <DropdownToggle className="w-100 h-100 m-0 employee-dropdown-button" caret>Roles</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Select Employee Role</DropdownItem>
+
+                      {this.state.formData["dropdown"].map((employee, key) => (
+                        <DropdownItem
+                          key={key}
+                          onClick={() => this.handleDropdown(employee)}
+                        >
+                          {employee.name}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </Dropdown>
+
+                </div>
+                <div className="col-6 d-flex align-items-center">
+                <div className="selected-employee-role d-inline-block w-100">
+                  {this.state.cropIds.map((cropId,i) => (
+                    <li key={i} className="list-group-item w-100">
+                      {cropId}
+                    </li>
+                  ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button className="button-action" onClick={this.eventHandler}>

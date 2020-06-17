@@ -3,7 +3,7 @@ import axios from "axios";
 export const ApiPost = (url, data, config) => {
   let properties = {
     method: "POST",
-    url: "http://10.0.0.103:8081/" + url,
+    url: "http://localhost:8081/" + url,
     data: data,
   };
 
@@ -19,7 +19,7 @@ export const ApiPost = (url, data, config) => {
 export const ApiGet = (url, config) => {
   let properties = {
     method: "GET",
-    url: "http://10.0.0.103:8081/" + url,
+    url: "http://localhost:8081/" + url,
   };
   for (let x in config) {
     properties[x] = config[x];
@@ -33,7 +33,7 @@ export const ApiGet = (url, config) => {
 export const ApiUpdate = (url, data, config) => {
   let properties = {
     method: "PUT",
-    url: "http://10.0.0.103:8081/" + url,
+    url: "http://localhost:8081/" + url,
   };
   for (let x in config) {
     properties[x] = config[x];
