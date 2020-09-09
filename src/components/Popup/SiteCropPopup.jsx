@@ -19,6 +19,7 @@ class SiteCropPopup extends React.Component {
       name: "",
       formData: this.props.data,
       cropIds: [],
+      selectedCrops: [],
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -70,9 +71,12 @@ class SiteCropPopup extends React.Component {
 
   handleDropdown(e) {
     let temparr = this.state.cropIds;
+    let temparr2 = this.state.selectedCrops;
     temparr.push(e.id);
+    temparr2.push(e);
     this.setState({
       cropIds: temparr,
+      selectedCrops: temparr2,
     });
   }
 
@@ -86,9 +90,7 @@ class SiteCropPopup extends React.Component {
       if (x === "uid" || x === "farmId" || x === "siteId") {
       } else {
         if (x === "dropdown") {
-          form.push(
-            
-          );
+          form.push();
         } else {
           form.push(
             <label className="form-label" key={x}>
@@ -115,23 +117,25 @@ class SiteCropPopup extends React.Component {
         </Button>
 
         <Modal show={this.state.show} onHide={this.handleShow}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add Crop</Modal.Title>
-          </Modal.Header>
+          <Modal.Header closeButton></Modal.Header>
           <Modal.Body>
             <this.generateForm />
             <p className=" m-0">Select Crop</p>
             <div className="col-12 worker-group-added-employees">
               <div className="row d-flex justify-content-center">
-                <div className="col-6">
-
+                <div className="col-12">
                   <Dropdown
-                  className="d-inline-block w-100 h-100"
+                    className="d-inline-block w-100 h-100 d-flex justify-content-center"
                     key="empoyee-role"
                     isOpen={this.state.dropdownOpen}
                     toggle={this.toggleDropdown}
                   >
-                    <DropdownToggle className="w-100 h-100 m-0 employee-dropdown-button" caret>Roles</DropdownToggle>
+                    <DropdownToggle
+                      className=" m-0 mb-2 employee-dropdown-button"
+                      caret
+                    >
+                      Crops
+                    </DropdownToggle>
                     <DropdownMenu>
                       <DropdownItem header>Select Employee Role</DropdownItem>
 
@@ -145,15 +149,14 @@ class SiteCropPopup extends React.Component {
                       ))}
                     </DropdownMenu>
                   </Dropdown>
-
                 </div>
-                <div className="col-6 d-flex align-items-center">
-                <div className="selected-employee-role d-inline-block w-100">
-                  {this.state.cropIds.map((cropId,i) => (
-                    <li key={i} className="list-group-item w-100">
-                      {cropId}
-                    </li>
-                  ))}
+                <div className="col-10 d-flex align-items-center">
+                  <div className="selected-employee-role d-inline-block w-100 m-0">
+                    {this.state.selectedCrops.map((crop, i) => (
+                      <li key={i} className="list-group-item w-100">
+                        {crop.name}
+                      </li>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -161,7 +164,7 @@ class SiteCropPopup extends React.Component {
           </Modal.Body>
           <Modal.Footer>
             <Button className="button-action" onClick={this.eventHandler}>
-              Save Changes
+              Add Crop
             </Button>
           </Modal.Footer>
         </Modal>

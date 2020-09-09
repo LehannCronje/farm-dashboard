@@ -6,6 +6,8 @@ import Popup from "components/Popup/popup";
 import routes from "routes/routes.js";
 import { Link, withRouter } from "react-router-dom";
 import { GetSites, PostSite } from "Services/SiteService";
+import OptionsPopup from "components/Popup/OptionsPopup";
+import { deleteSite } from "Services/SiteService";
 
 class Site extends React.Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class Site extends React.Component {
       sites: [],
     };
     this.PostHandler = this.PostHandler.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     console.log(this.props);
   }
 
@@ -35,6 +38,10 @@ class Site extends React.Component {
     PostSite(data).then(() => {
       this.InitialiseSites();
     });
+  }
+
+  handleDelete(siteId) {
+    deleteSite(siteId).then(() => this.InitialiseSites());
   }
 
   render() {
@@ -59,7 +66,7 @@ class Site extends React.Component {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              {/* <th>Action</th> */}
+              <th style={{ width: "10px" }}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -81,14 +88,12 @@ class Site extends React.Component {
                     {site.name}
                   </Link>
                 </td>
-                {/* <td>
-                  <button
-                    className="btn"
-                    onClick={() => this.deleteHandler(site.id)}
-                  >
-                    Delete
-                  </button>
-                </td> */}
+                <td>
+                  <OptionsPopup
+                    itemId={site.id}
+                    handleDelete={this.handleDelete}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

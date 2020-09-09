@@ -5,7 +5,7 @@ import Popup from "components/Popup/popup";
 import UserPopup from "components/Popup/UserPopup";
 import { getEmployees } from "Services/EmployeeService";
 import { addWorkerGroupEmployee } from "Services/WorkerGroupService";
-import { addUser } from "Services/UserService";
+import { addUser, enableUser } from "Services/UserService";
 import AddEmpWorkerGroupPopup from "components/Popup/AddEmpWorkerGroupPopup";
 class WorkerGroupEmployees extends React.Component {
   constructor(props) {
@@ -55,6 +55,12 @@ class WorkerGroupEmployees extends React.Component {
     });
   }
 
+  enableUserPost(farmEmpId) {
+    enableUser(farmEmpId).then(() => {
+      this.InitializeWorkerGroupEmployees();
+    });
+  }
+
   render() {
     return (
       <div className="content box-component-wrapper">
@@ -91,16 +97,24 @@ class WorkerGroupEmployees extends React.Component {
                     <td>{employee.name}</td>
                     <td>{employee.role}</td>
                     <td>
-                      {employee.hasUser ? (
-                        "true"
+                      {console.log(employee.userActive)}
+                      {employee.userActive === "disabled" ? (
+                        <button
+                          onClick={() => this.enableUserPost(employee.id)}
+                          className="btn button-action"
+                        >
+                          Enable
+                        </button>
                       ) : employee.role === "MEMBER" ? (
                         "Not needed"
-                      ) : (
+                      ) : employee.userActive === "false" ? (
                         <UserPopup
                           postMethod={this.UserPostHandler}
                           farmEmpId={employee.id}
                           data={this.state.userFormData}
                         />
+                      ) : (
+                        "true"
                       )}
                     </td>
                     {/* <td>

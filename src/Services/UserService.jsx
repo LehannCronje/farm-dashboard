@@ -1,4 +1,4 @@
-import { ApiPost, ApiGet } from "Utils/ApiUtil";
+import { ApiPost, ApiGet, ApiDelete } from "Utils/ApiUtil";
 import { store } from "Services/Redux/stores/store";
 import {
   saveUserDetails,
@@ -44,4 +44,14 @@ export const getUsers = () => {
   return ApiGet(url).then((res) => {
     return res.data;
   });
+};
+
+export const deleteUser = (userId) => {
+  let url = "user/" + userId;
+  return ApiDelete(url);
+};
+
+export const enableUser = (farmEmpId) => {
+  let url = "user/enable/" + farmEmpId;
+  return ApiPost(url);
 };

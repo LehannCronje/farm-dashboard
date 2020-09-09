@@ -19,7 +19,7 @@ class SiteReportPopup extends React.Component {
       dropDownValue: "Employees",
       dropdownFarmOpen: false,
       dropdownSiteOpen: false,
-      siteId: "",
+      selectedSite: "",
       selectedFarm: "",
       farms: [],
       sites: [],
@@ -45,7 +45,7 @@ class SiteReportPopup extends React.Component {
     });
   }
   eventHandler() {
-    var data = this.state.siteId;
+    var data = this.state.selectedSite.id;
 
     this.props.postMethod(data);
     this.handleShow();
@@ -66,7 +66,8 @@ class SiteReportPopup extends React.Component {
   handleFarmDropdown(e) {
     this.setState(
       {
-        selectedFarm: e.id,
+        selectedFarm: e,
+        selectedSite: "",
       },
       () => {
         this.InitializeSites();
@@ -76,7 +77,7 @@ class SiteReportPopup extends React.Component {
 
   handleSiteDropdown(e) {
     this.setState({
-      siteId: e.id,
+      selectedSite: e,
     });
   }
 
@@ -92,14 +93,14 @@ class SiteReportPopup extends React.Component {
 
   async InitializeSites() {
     this.setState({
-      sites: await GetSites(this.state.selectedFarm),
+      sites: await GetSites(this.state.selectedFarm.id),
     });
   }
 
   render() {
     return (
       <>
-        <Button variant="btn button-action" onClick={this.handleShow}>
+        <Button variant="btn button-create" onClick={this.handleShow}>
           Generate Site Report
         </Button>
 
@@ -108,44 +109,74 @@ class SiteReportPopup extends React.Component {
             <Modal.Title>{this.state.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Dropdown
-              key="farmDropdown"
-              isOpen={this.state.dropdownFarmOpen}
-              toggle={this.toggleFarmDropdown}
-            >
-              <DropdownToggle caret>Choose Farm</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Select a Farm</DropdownItem>
-
-                {this.state.farms.map((farm, key) => (
-                  <DropdownItem
-                    key={key}
-                    onClick={() => this.handleFarmDropdown(farm)}
+            <div className="col-12">
+              <div className="row">
+                <div className="col-5">
+                  <Dropdown
+                    key="farmDropdown"
+                    isOpen={this.state.dropdownFarmOpen}
+                    toggle={this.toggleFarmDropdown}
                   >
-                    {farm.name}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown
-              key="SiteDropDown"
-              isOpen={this.state.dropdownSiteOpen}
-              toggle={this.toggleSiteDropdown}
-            >
-              <DropdownToggle caret>Choose Site</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Select a Site</DropdownItem>
+                    <DropdownToggle caret>Choose Farm</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Select a Farm</DropdownItem>
 
-                {this.state.sites.map((site, key) => (
-                  <DropdownItem
-                    key={key}
-                    onClick={() => this.handleSiteDropdown(site)}
+                      {this.state.farms.map((farm, key) => (
+                        <DropdownItem
+                          key={key}
+                          onClick={() => this.handleFarmDropdown(farm)}
+                        >
+                          {farm.name}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
+                <div className="col-6 d-flex align-items-center">
+                  {this.state.selectedFarm ? (
+                    <li key="selectedEmp" className="list-group-item w-100">
+                      {this.state.selectedFarm.name}
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="col-12">
+              <div className="row">
+                <div className="col-5">
+                  <Dropdown
+                    key="SiteDropDown"
+                    isOpen={this.state.dropdownSiteOpen}
+                    toggle={this.toggleSiteDropdown}
                   >
-                    {site.name}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+                    <DropdownToggle caret>Choose Site</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Select a Site</DropdownItem>
+
+                      {this.state.sites.map((site, key) => (
+                        <DropdownItem
+                          key={key}
+                          onClick={() => this.handleSiteDropdown(site)}
+                        >
+                          {site.name}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
+                <div className="col-6 d-flex align-items-center">
+                  {this.state.selectedSite ? (
+                    <li key="selectedEmp" className="list-group-item w-100">
+                      {this.state.selectedSite.name}
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button className="button-action" onClick={this.eventHandler}>

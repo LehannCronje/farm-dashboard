@@ -1,9 +1,10 @@
 import React from "react";
 import { Table } from "reactstrap";
 import Popup from "components/Popup/popup";
-import { GetWork, PostWork } from "Services/WorkService";
+import { GetWork, PostWork, deleteWork } from "Services/WorkService";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import OptionsPopup from "components/Popup/OptionsPopup";
 
 class Crop extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class Crop extends React.Component {
     };
     this.InitialiseWork = this.InitialiseWork.bind(this);
     this.PostHandler = this.PostHandler.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +33,12 @@ class Crop extends React.Component {
 
   PostHandler(data) {
     PostWork(data).then(() => {
+      this.InitialiseWork();
+    });
+  }
+
+  handleDelete(workId) {
+    deleteWork(workId).then(() => {
       this.InitialiseWork();
     });
   }
@@ -57,7 +65,7 @@ class Crop extends React.Component {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              {/* <th>Action</th> */}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -65,14 +73,12 @@ class Crop extends React.Component {
               <tr key={work.id}>
                 <td>{work.id}</td>
                 <td>{work.name}</td>
-                {/* <td>
-                  <button
-                    className="btn"
-                    onClick={() => this.deleteHandler(work.id)}
-                  >
-                    Delete
-                  </button>
-                </td> */}
+                <td>
+                  <OptionsPopup
+                    itemId={work.id}
+                    handleDelete={this.handleDelete}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

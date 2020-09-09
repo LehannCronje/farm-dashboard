@@ -1,4 +1,4 @@
-import { ApiGet, ApiPost } from "Utils/ApiUtil";
+import { ApiGet, ApiPost, ApiDelete } from "Utils/ApiUtil";
 import { store } from "Services/Redux/stores/store";
 
 export const GetSites = (farmId) => {
@@ -23,4 +23,10 @@ export const PostSite = (data) => {
 export const UpdateSite = (data) => {
   let url = "sites/update";
   return ApiPost(url, data);
+};
+
+export const deleteSite = (siteId) => {
+  console.log(siteId);
+  let url = "sites/" + siteId;
+  return ApiDelete(url);
 };

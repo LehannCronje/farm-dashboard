@@ -6,6 +6,8 @@ import { getEmployees } from "Services/EmployeeService";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import routes from "routes/routes.js";
+import OptionsPopup from "components/Popup/OptionsPopup";
+import { deleteWorkerGroup } from "Services/WorkerGroupService";
 
 class WorkerGroup extends React.Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class WorkerGroup extends React.Component {
     };
 
     this.PostHandler = this.PostHandler.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +43,12 @@ class WorkerGroup extends React.Component {
 
   PostHandler(data) {
     PostWorkerGroup(data).then(() => {
+      this.InitialiseWorkerGroups();
+    });
+  }
+
+  handleDelete(workerGroupId) {
+    deleteWorkerGroup(workerGroupId).then(() => {
       this.InitialiseWorkerGroups();
     });
   }
@@ -65,7 +74,7 @@ class WorkerGroup extends React.Component {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              {/* <th>Action</th> */}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -85,14 +94,12 @@ class WorkerGroup extends React.Component {
                     {work.name}
                   </Link>
                 </td>
-                {/* <td>
-                  <button
-                    className="btn"
-                    onClick={() => this.deleteHandler(work.id)}
-                  >
-                    Delete
-                  </button>
-                </td> */}
+                <td>
+                  <OptionsPopup
+                    itemId={work.id}
+                    handleDelete={this.handleDelete}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

@@ -4,6 +4,8 @@ import EmployeePopup from "components/Popup/EmployeePopup";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getEmployees, postEmployees } from "Services/EmployeeService";
+import { deleteEmployee } from "Services/EmployeeService";
+import OptionsPopup from "components/Popup/OptionsPopup";
 
 class Employee extends React.Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class Employee extends React.Component {
       employees: [],
     };
     this.postHandler = this.postHandler.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +35,12 @@ class Employee extends React.Component {
 
   postHandler(data) {
     postEmployees(data).then(() => {
+      this.InitializeEmployees();
+    });
+  }
+
+  handleDelete(empId) {
+    deleteEmployee(empId).then(() => {
       this.InitializeEmployees();
     });
   }
@@ -59,7 +68,7 @@ class Employee extends React.Component {
               <th>Name</th>
               <th>Role</th>
               <th>Contact</th>
-              {/* <th>Action</th> */}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -69,14 +78,12 @@ class Employee extends React.Component {
                 <td>{employee.name}</td>
                 <td>{employee.type}</td>
                 <td>{employee.email}</td>
-                {/* <td>
-                  <button
-                    className="btn"
-                    onClick={() => this.deleteHandler(employee.id)}
-                  >
-                    Delete
-                  </button>
-                </td> */}
+                <td>
+                  <OptionsPopup
+                    itemId={employee.id}
+                    handleDelete={this.handleDelete}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

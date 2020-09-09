@@ -1,5 +1,6 @@
 import { ApiGet, ApiPost } from "Utils/ApiUtil";
 import { store } from "Services/Redux/stores/store";
+import { ApiDelete } from "Utils/ApiUtil";
 
 export const GetWorkerGroup = () => {
   let state = store.getState();
@@ -25,4 +26,9 @@ export const getWorkerGroupEmployees = () => {
 export const addWorkerGroupEmployee = (data) => {
   let url = "worker-group/farm-employees/";
   return ApiPost(url, data);
+};
+
+export const deleteWorkerGroup = (workerGroupId) => {
+  let url = "worker-group/" + workerGroupId;
+  return ApiDelete(url);
 };

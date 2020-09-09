@@ -35,6 +35,19 @@ axios.interceptors.request.use(
   }
 );
 
+axios.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (error) => {
+    if (403 === error.response.status) {
+      window.location = "/login";
+    } else {
+      return Promise.reject(error);
+    }
+  }
+);
+
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>

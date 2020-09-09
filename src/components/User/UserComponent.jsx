@@ -1,8 +1,9 @@
 import UserPopup from "components/Popup/UserPopup";
 import React from "react";
 import { Table } from "reactstrap";
-import { getUsers, addUser } from "Services/UserService";
+import { getUsers, addUser, deleteUser } from "Services/UserService";
 import { getEmployees } from "Services/EmployeeService";
+import OptionsPopup from "components/Popup/OptionsPopup";
 
 class UserComponent extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class UserComponent extends React.Component {
       },
     };
     this.PostHandler = this.PostHandler.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -41,6 +43,11 @@ class UserComponent extends React.Component {
     });
   }
 
+  handleDelete(userId) {
+    deleteUser(userId).then(() => {
+      this.InitializeUsers();
+    });
+  }
   render() {
     return (
       <div className="content box-component-wrapper">
@@ -65,7 +72,7 @@ class UserComponent extends React.Component {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              {/* <th>Action</th> */}
+              <th style={{ width: "10px" }}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -73,14 +80,12 @@ class UserComponent extends React.Component {
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.username}</td>
-                {/* <td>
-                  <button
-                    className="btn"
-                    onClick={() => this.deleteHandler(user.id)}
-                  >
-                    Delete
-                  </button>
-                </td> */}
+                <td>
+                  <OptionsPopup
+                    handleDelete={this.handleDelete}
+                    itemId={user.id}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

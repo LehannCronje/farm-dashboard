@@ -219,7 +219,7 @@
 /* Custom Style Lehann Cronje */
 
 .sidebar:after {
-  background: #3d4849
+  background: #3d4849;
 }
 
 .sidebar {
@@ -232,6 +232,7 @@
 }
 
 .main-panel {
+  overflow: hidden;
   width: calc(100% - 200px);
   min-height: 100vh;
   background-image: url("/test1.jpg");
@@ -245,7 +246,7 @@
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   margin-bottom: 25px;
-  background-color: rgba(0,0,0 ,0.3 );
+  background-color: rgba(0, 0, 0, 0.3);
   border-right: 2px solid #4a7d07;
   border-left: 2px solid #4a7d07;
   color: white;
@@ -333,7 +334,7 @@ td {
   color: white;
 }
 
-.sidebar .nav li:hover{
+.sidebar .nav li:hover {
   background: rgb(116, 134, 136);
   border-right: 8px solid #4a7d07;
 }
@@ -342,21 +343,20 @@ td {
   color: white !important;
 }
 
-.inline-dropdown{
+.inline-dropdown {
   display: inline-block;
 }
 
-.selected-employee-role{
-  margin-left:20px;
+.selected-employee-role {
+  margin-left: 20px;
 }
 
 /* .employee-dropdown-button{
   height:100%
 } */
-.list-group-item{
+.list-group-item {
   text-align: center;
 }
-
 
 @media screen and (max-width: 991px) {
   .main-panel {

@@ -1,4 +1,4 @@
-import { ApiGet, ApiPost } from "Utils/ApiUtil";
+import { ApiGet, ApiPost, ApiDelete } from "Utils/ApiUtil";
 import { store } from "Services/Redux/stores/store";
 
 export const GetCrops = (farmId) => {
@@ -22,4 +22,9 @@ export const GetCrops = (farmId) => {
 export const PostCrop = (data) => {
   let url = "crop/";
   return ApiPost(url, data);
+};
+
+export const deleteCrop = (cropId) => {
+  let url = "crop/" + cropId;
+  return ApiDelete(url);
 };

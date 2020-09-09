@@ -1,5 +1,6 @@
 import { ApiGet, ApiPost } from "Utils/ApiUtil";
 import { store } from "Services/Redux/stores/store";
+import { ApiDelete } from "Utils/ApiUtil";
 
 export const GetWork = (farmId) => {
   let state = store.getState();
@@ -12,4 +13,9 @@ export const GetWork = (farmId) => {
 export const PostWork = (data) => {
   let url = "work/";
   return ApiPost(url, data);
+};
+
+export const deleteWork = (workId) => {
+  let url = "work/" + workId;
+  return ApiDelete(url);
 };

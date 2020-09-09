@@ -10,7 +10,7 @@ input {
 }
 
 .modal-content {
-  background-color: rgba(181, 193, 180) !important;
+  background-color: rgb(233, 233, 233) !important;
   border-right: 4px solid #5e4c2a !important;
   border-left: 4px solid #5e4c2a !important;
   color: black !important;
@@ -30,4 +30,13 @@ input {
   background-color: #dac6ac !important;
   display: inline-block !important;
   width: 50%;
+}
+
+.test:after {
+  content: "\2807";
+  font-size: 25px;
+}
+
+.dropdown-menu {
+  overflow: hidden;
 }

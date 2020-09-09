@@ -5,6 +5,8 @@ import Routes from "routes/routes.js";
 import Popup from "components/Popup/popup.jsx";
 import { Link } from "react-router-dom";
 import { GetFarms, PostFarm } from "Services/FarmService";
+import OptionsPopup from "components/Popup/OptionsPopup";
+import { DeleteFarm } from "Services/FarmService";
 
 class Farm extends React.Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class Farm extends React.Component {
     };
     this.InitialiseFarms = this.InitialiseFarms.bind(this);
     this.handlePost = this.handlePost.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +35,12 @@ class Farm extends React.Component {
 
   handlePost(data) {
     PostFarm(data).then(() => {
+      this.InitialiseFarms();
+    });
+  }
+
+  handleDelete(farmId) {
+    DeleteFarm(farmId).then(() => {
       this.InitialiseFarms();
     });
   }
@@ -58,7 +67,7 @@ class Farm extends React.Component {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              {/* <th>Action</th> */}
+              <th style={{ width: "10px" }}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -76,14 +85,12 @@ class Farm extends React.Component {
                     {farm.name}
                   </Link>
                 </td>
-                {/* <td>
-                  <button
-                    className="btn"
-                    onClick={() => this.deleteHandler(farm.id)}
-                  >
-                    Delete
-                  </button>
-                </td> */}
+                <td>
+                  <OptionsPopup
+                    itemId={farm.id}
+                    handleDelete={this.handleDelete}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

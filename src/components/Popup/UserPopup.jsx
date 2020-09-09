@@ -20,14 +20,13 @@ class UserPopup extends React.Component {
       dropdownOpen: false,
       addedProjects: [],
       projects: [],
-      farmEmpId: props.farmEmpId,
+      farmEmp: "",
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.eventHandler = this.eventHandler.bind(this);
     this.generateForm = this.generateForm.bind(this);
     this.toggleDropdown = this.toggleDropdown.bind(this);
-    console.log(props.farmEmpId);
   }
 
   handleShow() {
@@ -47,7 +46,11 @@ class UserPopup extends React.Component {
       data[x] = this.state.formData[x];
     }
 
-    data.farmEmpId = this.state.farmEmpId;
+    if (this.props.farmEmpId) {
+      data.farmEmpId = this.props.farmEmpId;
+    } else {
+      data.farmEmpId = this.state.farmEmp.id;
+    }
     console.log(data);
     this.props.postMethod(data);
     this.handleShow();
@@ -67,7 +70,7 @@ class UserPopup extends React.Component {
 
   handleDropdown(e) {
     this.setState({
-      farmEmpId: e.id,
+      farmEmp: e,
     });
   }
 
@@ -81,25 +84,53 @@ class UserPopup extends React.Component {
       } else {
         if (x === "dropdown") {
           form.push(
-            <Dropdown
-              key={x}
-              isOpen={this.state.dropdownOpen}
-              toggle={this.toggleDropdown}
-            >
-              <DropdownToggle caret>{this.state.dropDownValue}</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Choose Employee</DropdownItem>
+            <div>
+              <p className=" m-0">Select Crop</p>
+              <div className="col-12 worker-group-added-employees">
+                <div className="row d-flex justify-content-center">
+                  <div className="col-12">
+                    <Dropdown
+                      className="d-inline-block w-100 h-100 d-flex justify-content-center"
+                      key="empoyee-role"
+                      isOpen={this.state.dropdownOpen}
+                      toggle={this.toggleDropdown}
+                    >
+                      <DropdownToggle
+                        className=" m-0 mb-2 employee-dropdown-button"
+                        caret
+                      >
+                        Employees
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem header>Select Employee</DropdownItem>
 
-                {this.state.formData[x].map((employee, key) => (
-                  <DropdownItem
-                    key={key}
-                    onClick={() => this.handleDropdown(employee)}
-                  >
-                    {employee.name}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+                        {this.state.formData["dropdown"].map(
+                          (employee, key) => (
+                            <DropdownItem
+                              key={key}
+                              onClick={() => this.handleDropdown(employee)}
+                            >
+                              {employee.name}
+                            </DropdownItem>
+                          )
+                        )}
+                      </DropdownMenu>
+                    </Dropdown>
+                  </div>
+                  <div className="col-10 d-flex align-items-center">
+                    <div className="selected-employee-role d-inline-block w-100 m-0">
+                      {this.state.farmEmp ? (
+                        <li key="selectedEmp" className="list-group-item w-100">
+                          {this.state.farmEmp.name}
+                        </li>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           );
         } else {
           form.push(

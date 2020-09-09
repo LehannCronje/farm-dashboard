@@ -3,7 +3,8 @@ import { Table } from "reactstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Popup from "components/Popup/popup";
-import { GetCrops, PostCrop } from "Services/CropService";
+import { GetCrops, PostCrop, deleteCrop } from "Services/CropService";
+import OptionsPopup from "components/Popup/OptionsPopup";
 
 class Crop extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class Crop extends React.Component {
     console.log(props);
     this.PostHandler = this.PostHandler.bind(this);
     this.InitialiseCrops = this.InitialiseCrops.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +34,12 @@ class Crop extends React.Component {
 
   PostHandler(data) {
     PostCrop(data).then(() => {
+      this.InitialiseCrops();
+    });
+  }
+
+  handleDelete(cropId) {
+    deleteCrop(cropId).then(() => {
       this.InitialiseCrops();
     });
   }
@@ -58,7 +66,7 @@ class Crop extends React.Component {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              {/* <th>Action</th> */}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -66,14 +74,12 @@ class Crop extends React.Component {
               <tr key={crop.id}>
                 <td>{crop.id}</td>
                 <td>{crop.name}</td>
-                {/* <td>
-                  <button
-                    className="btn"
-                    onClick={() => this.deleteHandler(crop.id)}
-                  >
-                    Delete
-                  </button>
-                </td> */}
+                <td>
+                  <OptionsPopup
+                    itemId={crop.id}
+                    handleDelete={this.handleDelete}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>

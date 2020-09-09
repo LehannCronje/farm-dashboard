@@ -42,7 +42,7 @@ class FarmReportPopup extends React.Component {
     });
   }
   eventHandler() {
-    var data = this.state.selectedFarm;
+    var data = this.state.selectedFarm.id;
     console.log(data);
     this.props.postMethod(data);
     this.handleShow();
@@ -56,7 +56,7 @@ class FarmReportPopup extends React.Component {
 
   handleFarmDropdown(e) {
     this.setState({
-      selectedFarm: e.id,
+      selectedFarm: e,
     });
   }
 
@@ -73,7 +73,7 @@ class FarmReportPopup extends React.Component {
   render() {
     return (
       <>
-        <Button variant="btn button-action" onClick={this.handleShow}>
+        <Button variant="btn button-create" onClick={this.handleShow}>
           Generate Farm Report
         </Button>
 
@@ -82,29 +82,44 @@ class FarmReportPopup extends React.Component {
             <Modal.Title>{this.state.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Dropdown
-              key="farmDropdown"
-              isOpen={this.state.dropdownFarmOpen}
-              toggle={this.toggleFarmDropdown}
-            >
-              <DropdownToggle caret>Choose Farm</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Select a Farm</DropdownItem>
-
-                {this.state.farms.map((farm, key) => (
-                  <DropdownItem
-                    key={key}
-                    onClick={() => this.handleFarmDropdown(farm)}
+            <div className="col-12">
+              <div className="row">
+                <div className="col-5">
+                  <Dropdown
+                    key="farmDropdown"
+                    isOpen={this.state.dropdownFarmOpen}
+                    toggle={this.toggleFarmDropdown}
                   >
-                    {farm.name}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+                    <DropdownToggle caret>Choose Farm</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Select a Farm</DropdownItem>
+
+                      {this.state.farms.map((farm, key) => (
+                        <DropdownItem
+                          key={key}
+                          onClick={() => this.handleFarmDropdown(farm)}
+                        >
+                          {farm.name}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
+                <div className="col-6 d-flex align-items-center">
+                  {this.state.selectedFarm ? (
+                    <li key="selectedEmp" className="list-group-item w-100">
+                      {this.state.selectedFarm.name}
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button className="button-action" onClick={this.eventHandler}>
-              Save Changes
+              Generate Farm Report
             </Button>
           </Modal.Footer>
         </Modal>

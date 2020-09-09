@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom";
 import { UpdateSite } from "Services/SiteService";
 import { GetSiteCrops } from "Services/SiteCropService";
 import { GetCrops } from "Services/CropService";
+import OptionsPopup from "components/Popup/OptionsPopup";
+import { deleteSiteCrop } from "Services/SiteCropService";
 
 class SiteCrop extends React.Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class SiteCrop extends React.Component {
     };
 
     this.PostHandler = this.PostHandler.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +50,12 @@ class SiteCrop extends React.Component {
     });
   }
 
+  handleDelete(cropId) {
+    deleteSiteCrop(cropId).then(() => {
+      this.InitializeSiteCrops();
+    });
+  }
+
   render() {
     return (
       <div className="content box-component-wrapper col-lg-10">
@@ -65,24 +74,27 @@ class SiteCrop extends React.Component {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              {/* <th>Action</th> */}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {this.state.siteCrops.map((siteCrops) => (
-              <tr key={siteCrops.id}>
-                <td>{siteCrops.id}</td>
-                <td>{siteCrops.name}</td>
-                {/* <td>
-                  <button
-                    className="btn"
-                    onClick={() => this.deleteHandler(siteCrops.id)}
-                  >
-                    Delete
-                  </button>
-                </td> */}
-              </tr>
-            ))}
+            {this.state.siteCrops.map(
+              (siteCrop) => (
+                console.log(siteCrop),
+                (
+                  <tr key={siteCrop.id}>
+                    <td>{siteCrop.id}</td>
+                    <td>{siteCrop.name}</td>
+                    <td>
+                      <OptionsPopup
+                        itemId={siteCrop.id}
+                        handleDelete={this.handleDelete}
+                      />
+                    </td>
+                  </tr>
+                )
+              )
+            )}
           </tbody>
         </Table>
       </div>

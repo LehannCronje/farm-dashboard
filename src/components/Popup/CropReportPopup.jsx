@@ -19,7 +19,7 @@ class CropReportPopup extends React.Component {
       dropDownValue: "Employees",
       dropdownFarmOpen: false,
       dropdownCropOpen: false,
-      cropId: "",
+      selectedCrop: "",
       selectedFarm: "",
       farms: [],
       crops: [],
@@ -45,7 +45,7 @@ class CropReportPopup extends React.Component {
     });
   }
   eventHandler() {
-    var data = this.state.cropId;
+    var data = this.state.selectedCrop.id;
 
     this.props.postMethod(data);
     this.handleShow();
@@ -66,7 +66,8 @@ class CropReportPopup extends React.Component {
   handleFarmDropdown(e) {
     this.setState(
       {
-        selectedFarm: e.id,
+        selectedFarm: e,
+        selectedCrop: "",
       },
       () => {
         this.InitializeCrops();
@@ -76,7 +77,7 @@ class CropReportPopup extends React.Component {
 
   handleCropDropdown(e) {
     this.setState({
-      cropId: e.id,
+      selectedCrop: e,
     });
   }
 
@@ -92,14 +93,14 @@ class CropReportPopup extends React.Component {
 
   async InitializeCrops() {
     this.setState({
-      crops: await GetCrops(this.state.selectedFarm),
+      crops: await GetCrops(this.state.selectedFarm.id),
     });
   }
 
   render() {
     return (
       <>
-        <Button variant="btn button-action" onClick={this.handleShow}>
+        <Button variant="btn button-create" onClick={this.handleShow}>
           Generate Crop Report
         </Button>
 
@@ -108,48 +109,78 @@ class CropReportPopup extends React.Component {
             <Modal.Title>{this.state.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Dropdown
-              key="farmDropdown"
-              isOpen={this.state.dropdownFarmOpen}
-              toggle={this.toggleFarmDropdown}
-            >
-              <DropdownToggle caret>Choose Farm</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Select a Farm</DropdownItem>
-
-                {this.state.farms.map((farm, key) => (
-                  <DropdownItem
-                    key={key}
-                    onClick={() => this.handleFarmDropdown(farm)}
+            <div className="col-12">
+              <div className="row">
+                <div className="col-5">
+                  <Dropdown
+                    key="farmDropdown"
+                    isOpen={this.state.dropdownFarmOpen}
+                    toggle={this.toggleFarmDropdown}
                   >
-                    {farm.name}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown
-              key="CropDropDown"
-              isOpen={this.state.dropdownCropOpen}
-              toggle={this.toggleCropDropdown}
-            >
-              <DropdownToggle caret>Choose Crop</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Select a Crop</DropdownItem>
+                    <DropdownToggle caret>Choose Farm</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Select a Farm</DropdownItem>
 
-                {this.state.crops.map((crop, key) => (
-                  <DropdownItem
-                    key={key}
-                    onClick={() => this.handleCropDropdown(crop)}
+                      {this.state.farms.map((farm, key) => (
+                        <DropdownItem
+                          key={key}
+                          onClick={() => this.handleFarmDropdown(farm)}
+                        >
+                          {farm.name}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
+                <div className="col-6 d-flex align-items-center">
+                  {this.state.selectedFarm ? (
+                    <li key="selectedEmp" className="list-group-item w-100">
+                      {this.state.selectedFarm.name}
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="col-12">
+              <div className="row">
+                <div className="col-5">
+                  <Dropdown
+                    key="CropDropDown"
+                    isOpen={this.state.dropdownCropOpen}
+                    toggle={this.toggleCropDropdown}
                   >
-                    {crop.name}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
+                    <DropdownToggle caret>Choose Crop</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem header>Select a Crop</DropdownItem>
+
+                      {this.state.crops.map((crop, key) => (
+                        <DropdownItem
+                          key={key}
+                          onClick={() => this.handleCropDropdown(crop)}
+                        >
+                          {crop.name}
+                        </DropdownItem>
+                      ))}
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
+                <div className="col-6 d-flex align-items-center">
+                  {this.state.selectedCrop ? (
+                    <li key="selectedEmp" className="list-group-item w-100">
+                      {this.state.selectedCrop.name}
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <Button className="button-action" onClick={this.eventHandler}>
-              Save Changes
+              Create Crop Report
             </Button>
           </Modal.Footer>
         </Modal>

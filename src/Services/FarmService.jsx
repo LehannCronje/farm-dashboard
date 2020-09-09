@@ -1,4 +1,5 @@
 import { ApiGet, ApiPost } from "Utils/ApiUtil";
+import { ApiDelete } from "Utils/ApiUtil";
 
 export const GetFarms = () => {
   let url = "farms/";
@@ -10,4 +11,9 @@ export const GetFarms = () => {
 export const PostFarm = (data) => {
   let url = "farms/create";
   return ApiPost(url, data);
+};
+
+export const DeleteFarm = (farmId) => {
+  let url = "farms/" + farmId;
+  return ApiDelete(url);
 };
